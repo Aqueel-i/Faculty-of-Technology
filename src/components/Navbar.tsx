@@ -48,12 +48,23 @@ const Navbar: React.FC = () => {
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         {/* === Logo === */}
         <Link to="/" className="flex items-center space-x-2">
-          <div className="w-10 h-10 rounded-full bg-gradient-to-r from-teal-400 to-blue-500 flex items-center justify-center shadow-md">
-            <span className="text-white font-bold text-lg">ZC</span>
+
+          <div className="flex items-center space-x-3">
+            <img
+              src="Public\Assets\ZC.png"
+              alt="Zahira College Logo"
+              className="w-16 h-16 object-contain rounded-full shadow-md"
+            />
+            <img
+              src="Public\Assets\Tech.png"
+              alt="Technology Department Logo"
+              className="w-14 h-14 object-contain rounded-full shadow-md"
+            />
           </div>
+
           <div>
             <span className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-500">
-              A/L Technology
+              Technology Stream
             </span>
 
             <p className="text-lg font-semibold text-teal-600 dark:text-teal-400">
