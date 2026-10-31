@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -9,26 +10,19 @@ import Announcements from './pages/Announcements';
 import Gallery from './pages/Gallery';
 import Projects from './pages/Projects';
 import Contact from './pages/Contact';
-import LoadingScreen from './components/LoadingScreen';
-import { ThemeProvider } from './context/ThemeContext';
 export function App() {
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    // Simulate loading time
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-    return () => clearTimeout(timer);
-  }, []);
-  if (loading) {
-    return <LoadingScreen />;
-  }
-  return <ThemeProvider>
-      <Router>
-        <div className="flex flex-col min-h-screen">
-          <Navbar />
-          <main className="flex-grow">
-            <Routes>
+  return <Router><AppContent /></Router>;
+}
+
+function AppContent() {
+  const location = useLocation();
+  return <>
+    <div className="site-shell">
+      <Navbar />
+      <main className="route-main">
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div key={location.pathname} className="route-stage" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: .32, ease: 'easeOut' }}>
+            <Routes location={location}>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/staff" element={<Staff />} />
@@ -37,9 +31,10 @@ export function App() {
               <Route path="/projects" element={<Projects />} />
               <Route path="/contact" element={<Contact />} />
             </Routes>
-          </main>
-          <Footer />
-        </div>
-      </Router>
-    </ThemeProvider>;
+          </motion.div>
+        </AnimatePresence>
+      </main>
+      <Footer />
+    </div>
+  </>;
 }
